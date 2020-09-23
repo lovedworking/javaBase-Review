@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 给定一个数组arr，返回arr的最长无的重复子串的长度(无重复指的是所有数字都不相同)。
+ *
  * https://www.nowcoder.com/practice/b56799ebfd684fb394bd315e89324fb4?tpId=188&&tqId=35474&rp=1&ru=/activity/oj&qru=/ta/job-code-high-week/question-ranking
  */
 public class LongestNoRepetition {
