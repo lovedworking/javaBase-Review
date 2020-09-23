@@ -1,9 +1,6 @@
 package algorithm.sort;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 桶排序
@@ -20,6 +17,10 @@ import java.util.Map;
  */
 public class TopKElement {
     public static void main(String[] args) {
+        int[] test ={1,1,1,2,2,3};
+        int k=2;
+        int[] topKUseBucklet = getTopKUseBucklet(test, k);
+        Arrays.stream(topKUseBucklet).forEach(System.out::println);
 
     }
 
@@ -54,20 +55,22 @@ public class TopKElement {
         HashMap<Integer, Integer> frequentMap = new HashMap<>();
         for (int num : nums) {
             //出现过就加1
-            frequentMap.getOrDefault(num,frequentMap.getOrDefault(num,0)+1);
+            frequentMap.put(num,frequentMap.getOrDefault(num,0)+1);
         }
         //桶空出来一位  因为桶索引为0的位置不存在元素  至少出现1次
         List<Integer>[] buckletList=new List[nums.length+1];
-        frequentMap.forEach((value,frequecy)->{
+        frequentMap.forEach((num,frequecy)->{
             //value 数值   frequecy出现的次数
-            if(buckletList[value]==null){
-                buckletList[value]=new ArrayList();
+            if(buckletList[frequecy]==null){
+                buckletList[frequecy]=new ArrayList();
             }
-            buckletList[value].add(value);
+            buckletList[frequecy].add(num);
         });
         // 倒序遍历数组获取出现顺序从大到小的排列
-        for(int i = buckletList.length - 1;i >= 0 && res.size() < k;i--){
-            if(buckletList[i] == null) continue;
+        for (int i = buckletList.length-1; i >=0&&res.size()<k; i--) {
+            if(buckletList[i]==null){
+                continue;
+            }
             res.addAll(buckletList[i]);
         }
         return res.stream().mapToInt(Integer::valueOf).toArray();
