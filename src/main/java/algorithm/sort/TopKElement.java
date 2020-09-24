@@ -71,7 +71,9 @@ public class TopKElement {
             if(buckletList[i]==null){
                 continue;
             }
-            res.addAll(buckletList[i]);
+            if(buckletList[i].size() <= k - res.size())
+                res.addAll(buckletList[i]);
+            else res.addAll(buckletList[i].subList(0,k - res.size()));
         }
         return res.stream().mapToInt(Integer::valueOf).toArray();
     }
