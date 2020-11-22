@@ -5,24 +5,25 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 public class NettyServerHandler extends ChannelHandlerAdapter {
-
-
+    private int counter;
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf buf = (ByteBuf) msg;
         byte[] req = new byte[buf.readableBytes()];
         buf.readBytes(req);
-        String body = new String(req, StandardCharsets.UTF_8);
-        System.out.println("The Netty Server receive order:"+body);
+        String body = new String(req, StandardCharsets.UTF_8).substring(0,
+                req.length-System.getProperty("line.separator").length());
+        System.out.println("The Netty Server receive order:"+body+";the counter is: "+ ++counter);
         String currentTime="QUERY TIME ORDER".equalsIgnoreCase(body)?new
                 java.util.Date(System.currentTimeMillis()).toString():"BAD ORDER";
         ByteBuf resp= Unpooled.copiedBuffer(currentTime.getBytes());
-        ctx.write(resp);
+        ctx.writeAndFlush(resp);
     }
 
-    public void channelReadCompleter(ChannelHandlerContext ctx){
+    public void channelReadComplete(ChannelHandlerContext ctx){
         ctx.flush();
     }
 
