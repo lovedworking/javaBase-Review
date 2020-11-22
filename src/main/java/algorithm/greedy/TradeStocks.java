@@ -1,5 +1,7 @@
 package algorithm.greedy;
 
+import java.util.HashMap;
+
 /**
  * 买卖股票的最佳时机
  * 1 给定一个数组，它的第i元素是一支给定固定第i天的价格
@@ -28,4 +30,18 @@ package algorithm.greedy;
  *
  */
 public class TradeStocks {
+
+    public static void main(String[] args) {
+        int[] k={7, 1, 5, 3, 6, 4};
+    }
+
+    //我的思路就是 数组 j->k  买入b  卖出 s    那么买入b之后到k之间就是找一个差值最大  min 最初存放0  找到比它大的 替换
+    //一次遍历  用一个map存放key买入值   value存放计算的利润
+    public static void  gainProfit(int[] stocks){
+        HashMap<Integer, Integer> gainMap = new HashMap<>();
+        for (int i = 0; i < stocks.length; i++) {
+            int price = stocks[i];
+            Integer origPrice = gainMap.getOrDefault(price, 0);
+        }
+    }
 }
